@@ -15,7 +15,7 @@ def get_template(heading, content):
         <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title>the conding love random</title>
+            <title>The Coding Love Random Simplified</title>
         </head>
         <body>
         {heading}

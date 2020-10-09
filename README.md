@@ -1,6 +1,6 @@
-# The conding love random simplified server
+# The Coding Love Random Simplified
 
-   http://the-coding-love-random.siimp.ee
+   https://the-coding-love-random.siimp.ee
 
 ## installing environment
     python3 -m venv env
