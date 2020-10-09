@@ -4,7 +4,7 @@ import socketserver
 import bs4
 import requests
 
-DOMAIN_DENY_LIST = ['i.imgur.com']
+DOMAIN_DENY_LIST = ['i.imgur.com', 'i.minus.com', 'thecodinglove.com']
 THE_CODING_LOVE_RANDOM_URL = 'https://thecodinglove.com/random'
 PORT = 8087
 
