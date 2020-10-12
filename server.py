@@ -1,15 +1,16 @@
 import http.server
 import socketserver
+import typing
 
 import bs4
 import requests
 
-DOMAIN_DENY_LIST = ['i.imgur.com', 'i.minus.com', 'thecodinglove.com']
-THE_CODING_LOVE_RANDOM_URL = 'https://thecodinglove.com/random'
+DOMAIN_DENY_LIST: typing.List[str] = ['i.imgur.com', 'i.minus.com', 'thecodinglove.com']
+THE_CODING_LOVE_RANDOM_URL: str = 'https://thecodinglove.com/random'
 PORT = 8087
 
 
-def get_template(heading, content):
+def get_template(heading, content) -> str:
     return f'''
         <!DOCTYPE html>
         <html lang="">
@@ -17,6 +18,16 @@ def get_template(heading, content):
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <title>The Coding Love Random Simplified</title>
+            <style>
+                body {{
+                    font-family: sans-serif;
+                }}
+                video {{
+                    width: 100%;
+                    max-width: 50em;
+                    height: auto;
+                }}
+            </style>
         </head>
         <body>
         {heading}
@@ -26,14 +37,14 @@ def get_template(heading, content):
     '''
 
 
-def is_denied_domain(data_src):
-    is_denied = any(denied_domain for denied_domain in DOMAIN_DENY_LIST if denied_domain in data_src)
+def is_denied_domain(data_src: str) -> bool:
+    is_denied: bool = any(denied_domain for denied_domain in DOMAIN_DENY_LIST if denied_domain in data_src)
     if is_denied:
         print(data_src, 'is denied domain')
     return is_denied
 
 
-def has_denied_data_content(content):
+def has_denied_data_content(content) -> bool:
     if content.find('img') and content.find('img').has_attr('data-src'):
         data_src = content.find('img').get_attribute_list('data-src')[0]
         if is_denied_domain(data_src):
@@ -41,7 +52,7 @@ def has_denied_data_content(content):
     return False
 
 
-def get_simplified_html():
+def get_simplified_html() -> typing.Optional[str]:
     response = requests.get(THE_CODING_LOVE_RANDOM_URL)
     soup = bs4.BeautifulSoup(response.content, features='html.parser')
     article = soup.find('article')
@@ -55,7 +66,7 @@ def get_simplified_html():
 
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     @staticmethod
-    def get_page():
+    def get_page() -> str:
         page = get_simplified_html()
 
         reload_count = 0
