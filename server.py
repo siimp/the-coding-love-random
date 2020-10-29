@@ -47,7 +47,7 @@ def is_denied_domain(data_src: str) -> bool:
 def has_denied_data_content(content) -> bool:
     img = content.find('img')
     if img and img.has_attr('data-src'):
-        return is_denied_domain(img['data_src'])
+        return is_denied_domain(img['data-src'])
     return False
 
 
@@ -55,11 +55,12 @@ def get_simplified_html() -> typing.Optional[str]:
     response = requests.get(THE_CODING_LOVE_RANDOM_URL)
     soup = bs4.BeautifulSoup(response.content, features='html.parser')
     article = soup.find('article')
-    heading = article.find('h1')
     content = article.find('div', class_='blog-post-content')
 
     if has_denied_data_content(content):
         return None
+    
+    heading = article.find('h1')
     return get_template(heading, content)
 
 
