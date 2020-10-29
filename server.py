@@ -45,10 +45,10 @@ def is_denied_domain(data_src: str) -> bool:
 
 
 def has_denied_data_content(content) -> bool:
-    if content.find('img') and content.find('img').has_attr('data-src'):
-        data_src = content.find('img').get_attribute_list('data-src')[0]
-        if is_denied_domain(data_src):
-            return True
+    img = content.find('img')
+    if img and img.has_attr('data-src'):
+        data_src = img.get_attribute_list('data-src')[0]
+        return is_denied_domain(data_src)
     return False
 
 
