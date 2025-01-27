@@ -23,9 +23,11 @@ def get_template(heading, content) -> str:
                     font-family: sans-serif;
                 }}
                 video {{
-                    width: 100%;
-                    max-width: 50em;
-                    height: auto;
+                    height: 80hv;
+                }}
+                p {{
+                    margin: 0;
+                    padding: 0;
                 }}
             </style>
         </head>
